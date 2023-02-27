@@ -34,7 +34,7 @@ export class BookSearchComponent {
     this.searchForm.controls.term.setValue('javascript');
     this.searchBooks();
   }
-
+ //to search books
   searchBooks() {
     if (this.searchForm.value.term) {
       this.store.dispatch(searchBooks({ term: this.searchForm.value.term }));
