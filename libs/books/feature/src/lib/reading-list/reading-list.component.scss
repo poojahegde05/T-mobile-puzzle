@@ -4,6 +4,7 @@
   display: block;
   font-size: 0.75rem;
 }
+
 .reading-list {
   padding: $spacing-xxs;
 }
@@ -14,10 +15,22 @@
   margin-bottom: $spacing-xs;
   width: 100%;
 
-  > * {
+  >* {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .reading-list-item--buttons {
+    flex-direction: row;
+
+    .mark-finish-icon {
+      color: $gray40;
+    }
+
+    .finished-icon {
+      color: $green-dark;
+    }
   }
 }
 
@@ -34,7 +47,8 @@
 }
 
 .reading-list-item--details--title,
-.reading-list-item--details--author {
+.reading-list-item--details--author,
+.reading-list-item--details--finished-date {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
