@@ -1,24 +1,34 @@
 <ng-container *ngIf="(readingList$ | async).length > 0; else empty">
-  <div class="reading-list-item" *ngFor="let book of readingList$ | async">
+  <div class="reading-list-item" data-testing="reading-list-item" *ngFor="let book of readingList$ | async">
     <div>
       <img class="reading-list-item--cover" [src]="book.coverUrl" alt="" />
     </div>
     <div class="reading-list-item--details">
       <strong class="reading-list-item--details--title">{{
         book.title
-      }}</strong>
+        }}</strong>
       <div class="reading-list-item--details--author">
-        {{ book.authors.join(',') }}
+        {{ book.authors?.join(',') }}
+      </div>
+      <div *ngIf="book.finished" class="reading-list-item--details--finished-date" data-testing="finished-date">
+        <strong><i>Finished on {{ book.finishedDate | date: 'M/d/yyyy' }}</i></strong>
       </div>
     </div>
     <div>
-      <button
-        mat-icon-button
-        color="warn"
-        [attr.aria-label]="'Remove ' + book.title + ' from reading list'"
-        (click)="removeFromReadingList(book)"
-      >
+      <button mat-icon-button 
+        data-testing="remove-btn"
+        color="warn" [attr.aria-label]="'Remove ' + book.title + ' from reading list'"
+        (click)="removeFromReadingList(book)">
         <mat-icon>remove_circle</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-icon-button 
+      data-testing="finished-btn"
+          [attr.aria-label]="
+          'Mark ' + book.title + ' as finished from reading list'
+        " (click)="markBookAsFinished(book)">
+        <mat-icon [ngStyle]="{ color: book.finished ? 'green' : 'red' }">done</mat-icon>
       </button>
     </div>
   </div>
