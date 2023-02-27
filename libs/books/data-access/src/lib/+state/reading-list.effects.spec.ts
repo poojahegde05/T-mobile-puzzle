@@ -8,32 +8,34 @@ import { SharedTestingModule } from '@tmo/shared/testing';
 import { ReadingListEffects } from './reading-list.effects';
 import * as ReadingListActions from './reading-list.actions';
 import { API_PATH } from '../constants';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('To Initialize effects ', () => {
+describe('Test Suite for Reading list effect ', () => {
   let actions: ReplaySubject<any>;
   let effects: ReadingListEffects;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedTestingModule],
+      imports: [SharedTestingModule, MatSnackBarModule, NoopAnimationsModule],
       providers: [
         ReadingListEffects,
         provideMockActions(() => actions),
-        provideMockStore(),
-      ],
+        provideMockStore()
+      ]
     });
 
     effects = TestBed.inject(ReadingListEffects);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  describe('loadReadingList$', () => {
-    it('should work', (done) => {
+  describe('Test suite to load ReadingList$', () => {
+    it('should load reading list', done => {
       actions = new ReplaySubject();
       actions.next(ReadingListActions.init());
 
-      effects.loadReadingList$.subscribe((action) => {
+      effects.loadReadingList$.subscribe(action => {
         expect(action).toEqual(
           ReadingListActions.loadReadingListSuccess({ list: [] })
         );
